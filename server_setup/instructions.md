@@ -14,7 +14,7 @@ Update: Mar 31, 2023
 - https://ohmyz.sh/#install
 
 ```bash
-// Install Zsh
+# Install Zsh
 sudo apt install zsh
 sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 ```
@@ -76,10 +76,12 @@ mv tmux.conf .tmux.conf
 
 ## 4. Vim 
 
-`.vimrc`: 
+`.vimrc`: https://github.com/amix/vimrc
 ```bash
-wget https://raw.githubusercontent.com/zlwang-cs/CodeBase/main/server_setup/vimrc
-mv vimrc .vimrc
+git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
+sh ~/.vim_runtime/install_basic_vimrc.sh
+
+echo "set cursorline" >> .vimrc
 ```
 
 

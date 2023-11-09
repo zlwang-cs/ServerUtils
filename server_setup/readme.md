@@ -20,6 +20,12 @@ sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/ins
 ```
 2. Themes
 
+`Powerlevel10k`
+```bash
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+`ZSH_THEME="powerlevel10k/powerlevel10k"`
+
 `myys.zsh-theme`: 
 ```bash
 wget https://raw.githubusercontent.com/zlwang-cs/CodeBase/main/server_setup/myys.zsh-theme

@@ -26,6 +26,9 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~
 ```
 `ZSH_THEME="powerlevel10k/powerlevel10k"`
 
+Solve bugs:
+add `unset ZSH_AUTOSUGGEST_USE_ASYNC` at the bottom of .zshrc
+
 `myys.zsh-theme`: 
 ```bash
 wget https://raw.githubusercontent.com/zlwang-cs/CodeBase/main/server_setup/myys.zsh-theme

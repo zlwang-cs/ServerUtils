@@ -73,6 +73,19 @@ conda create -n general python=3.X
 
 <!-- TODO -->
 
+5. Update Cuda Toolkit
+
+- Google search for the runfile of the right version
+- `sudo sh cuda_XXX_linux.run`
+- Double check the symlink in `/usr/local/cuda`
+- Add this to the .zshrc or .bashrc
+```
+#cuda
+export CUDA_HOME=/usr/local/cuda
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
+export PATH=/usr/local/cuda/bin:$PATH
+```
+
 
 ## 3. Tmux
 

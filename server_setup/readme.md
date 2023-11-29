@@ -1,6 +1,7 @@
 # Server Setup
 
-Update: Mar 31, 2023
+Created: Mar 31, 2023
+Updated: Nov 28, 2023 (by [@zlwang-cs])
 
 ## 0. SSH-Key
 
@@ -10,52 +11,41 @@ Update: Mar 31, 2023
 
 1. Install zsh+omz
 
-- https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH
-- https://ohmyz.sh/#install
+   - https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH
+   - https://ohmyz.sh/#install
 
-```bash
-# Install Zsh
-sudo apt install zsh
-sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
-```
+     ```bash
+     # Install Zsh
+     sudo apt install zsh
+     sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+     ```
 2. Themes
+   - `Powerlevel10k`: https://github.com/romkatv/powerlevel10k
+   - <img src="assets/zsh_theme.png" width="500">
+   - Install:
+     ```bash
+     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+     ```
+   - Set `ZSH_THEME="powerlevel10k/powerlevel10k"` in `.zshrc`
+   - Solve bugs: add `unset ZSH_AUTOSUGGEST_USE_ASYNC` at the bottom of `.zshrc`
 
-`Powerlevel10k`
-```bash
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
-```
-`ZSH_THEME="powerlevel10k/powerlevel10k"`
-
-Solve bugs:
-add `unset ZSH_AUTOSUGGEST_USE_ASYNC` at the bottom of .zshrc
-
-`myys.zsh-theme`: 
-```bash
-wget https://raw.githubusercontent.com/zlwang-cs/CodeBase/main/server_setup/myys.zsh-theme
-mv myys.zsh-theme ~/.oh-my-zsh/custom/themes
-```
-
-`.condarc`: Add it after installing **conda**
-```bash
-wget https://raw.githubusercontent.com/zlwang-cs/CodeBase/main/server_setup/condarc
-mv condarc .condarc
-```
-
-1. Plugins 
-
-- git
-- zsh-autosuggestions: 
-  `git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions`
-- zsh-syntax-highlighting:
-  `git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting`
+3. Plugins 
+   - git
+   - zsh-autosuggestions: 
+     - `git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh custom}/plugins/zsh-autosuggestions`
+   - zsh-syntax-highlighting:
+     - `git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting`
+   - In `.zshrc`: <img src="assets/zsh_plugins.png" width="200">
 
 ## 2. Conda
 
-1. Download: https://docs.conda.io/en/latest/miniconda.html#linux-installers
+1. Recommend to use `miniconda` and use a separate env other than `base` for development (so that if you somehow ruin your `env` in use, you can simply reinstall it.)
 
 ```bash
-wget https://repo.anaconda.com/miniconda/Miniconda3-py39_23.1.0-1-Linux-x86_64.sh
-sh Miniconda3-py39_23.1.0-1-Linux-x86_64.sh
+mkdir -p ~/miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+rm -rf ~/miniconda3/miniconda.sh
 ```
 
 2. Create Environment
@@ -64,36 +54,41 @@ sh Miniconda3-py39_23.1.0-1-Linux-x86_64.sh
 conda create -n general python=3.X
 ```
 
-3. PyTorch
+## 3. PyTorch
 
-```
-```
+1. Web Page: https://pytorch.org/get-started/locally/
 
-4. *Apex*
+2. Install a specific cuda toolkit
+  <img src="assets/pytorch_install.png" width="500">
+   * **Option 1: manually install the cuda toolkit**
+     - Google search for the runfile of the right version
+     - `sudo sh cuda_XXX_linux.run`
+     - Double check the symlink in `/usr/local/cuda`
+     - Add this to the .zshrc or .bashrc
+       ```bash
+       #cuda
+       export CUDA_HOME=/usr/local/cuda
+       export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
+       export PATH=/usr/local/cuda/bin:$PATH
+       ```
+   * **Option 2: install cuda toolkit as a package in conda env**
+     - All you need is simply `nvcc`
+     - https://anaconda.org/nvidia/cuda-nvcc
+       - `conda install -c nvidia cuda-nvcc`
+       - `conda install -c "nvidia/label/cuda-1X.X.X" cuda-nvcc`
+     - Make sure there is no code to import/specify the `cuda` directory in your `.bashrc` or `.zshrc`
+3. Check `nvcc` version: `nvcc -V`
+4. Why do my `ncvv -v` and `nvida-smi` show different versions?
+   * `nvidia-smi` shows the highest cuda version the current cuda env supports. (could be higher than your actual cuda version).
+   * `nvcc -v` is your true cuda version.
 
-<!-- TODO -->
-
-5. Update Cuda Toolkit (from Nvidia)
-
-- Google search for the runfile of the right version
-- `sudo sh cuda_XXX_linux.run`
-- Double check the symlink in `/usr/local/cuda`
-- Add this to the .zshrc or .bashrc
-```
-#cuda
-export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
-export PATH=/usr/local/cuda/bin:$PATH
-```
-
-6. Install Cuda Toolkit (from Conda): https://anaconda.org/nvidia/cuda-nvcc
 
 
 ## 3. Tmux
 
 `.tmux.conf`: 
 ```bash
-wget https://raw.githubusercontent.com/zlwang-cs/CodeBase/main/server_setup/tmux.conf
+wget https://raw.githubusercontent.com/Shang-Data-Lab/CodeBase/main/server_setup/tmux.conf
 mv tmux.conf .tmux.conf
 ```
 

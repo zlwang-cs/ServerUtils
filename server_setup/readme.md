@@ -1,7 +1,7 @@
 # Server Setup
 
 Created: Mar 31, 2023
-Updated: Nov 28, 2023 (by [@zlwang-cs])
+Updated: Nov 28, 2023 (by Zilong Wang)
 
 ## 0. SSH-Key
 

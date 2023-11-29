@@ -60,6 +60,7 @@ conda create -n general python=3.X
 
 2. Install a specific cuda toolkit
   <img src="assets/pytorch_install.png" width="500">
+   
    * **Option 1: manually install the cuda toolkit**
      - Google search for the runfile of the right version
      - `sudo sh cuda_XXX_linux.run`
@@ -71,12 +72,14 @@ conda create -n general python=3.X
        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
        export PATH=/usr/local/cuda/bin:$PATH
        ```
+   
    * **Option 2: install cuda toolkit as a package in conda env**
      - All you need is simply `nvcc`
      - https://anaconda.org/nvidia/cuda-nvcc
        - `conda install -c nvidia cuda-nvcc`
        - `conda install -c "nvidia/label/cuda-1X.X.X" cuda-nvcc`
      - Make sure there is no code to import/specify the `cuda` directory in your `.bashrc` or `.zshrc`
+      
 3. Check `nvcc` version: `nvcc -V`
 4. Why do my `ncvv -v` and `nvida-smi` show different versions?
    * `nvidia-smi` shows the highest cuda version the current cuda env supports. (could be higher than your actual cuda version).

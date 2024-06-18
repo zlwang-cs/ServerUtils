@@ -91,7 +91,7 @@ conda create -n general python=3.X
 
 `.tmux.conf`: 
 ```bash
-wget https://raw.githubusercontent.com/Shang-Data-Lab/CodeBase/main/code/tmux.conf
+wget https://raw.githubusercontent.com/zlwang-cs/ServerUtils/main/code/tmux.conf
 mv tmux.conf .tmux.conf
 ```
 
